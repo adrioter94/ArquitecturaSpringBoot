@@ -31,6 +31,14 @@ public class LibroService {
     }
 
     public Libro crearLibro(LibroDTO libroDTO) {
+
+        if (libroDTO.getTitulo() == null || libroDTO.getTitulo().trim().isEmpty()) {
+            throw new IllegalArgumentException("El título no puede estar vacío");
+        }
+        if (libroDTO.getPaginas() < 1) {
+            throw new IllegalArgumentException("El número de páginas debe ser mayor que 0");
+        }
+
         Libro libro = new Libro(null, libroDTO.getTitulo(), libroDTO.getAutor(), libroDTO.getPaginas());
         return libroRepository.save(libro);
     }

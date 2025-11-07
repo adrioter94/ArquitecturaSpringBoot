@@ -16,13 +16,13 @@ public class ArquitecturaSpringBootApplication {
 		SpringApplication.run(ArquitecturaSpringBootApplication.class, args);
 	}
 
-    @Bean
+    /*@Bean
     public CommandLineRunner init(LibroRepository repositorio) {
         return args -> {
             repositorio.save(new Libro(null, "El señor de los anillos", "J. R. R. Tolkien", 1392));
             repositorio.save(new Libro(null, "Harry Potter", "J. K. Rowling", 3872));
         };
-    }
+    }*/
 
 
 }

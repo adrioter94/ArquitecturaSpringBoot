@@ -6,6 +6,7 @@ import com.scalian.ArquitecturaSpringBoot.model.entity.Libro;
 import com.scalian.ArquitecturaSpringBoot.model.entity.Persona;
 import com.scalian.ArquitecturaSpringBoot.service.LibroService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,13 +19,20 @@ public class LibroController {
     private final LibroService libroService;
 
     @GetMapping
-    public List<LibroDTO> obtenerTodas() {
+    public List<LibroDTO> obtenerTodos() {
         return libroService.obtenerTodos();
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Libro crearLibro(@RequestBody LibroDTO libroDTO) {
         return libroService.crearLibro(libroDTO);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleIllegalArgument(IllegalArgumentException ex) {
+        return ex.getMessage();
     }
 
     //JPQL
