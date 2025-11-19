@@ -1,5 +1,6 @@
 package com.scalian.ArquitecturaSpringBoot.service;
 
+import com.scalian.ArquitecturaSpringBoot.kafka.LibroEventProducer;
 import com.scalian.ArquitecturaSpringBoot.model.dto.LibroDTO;
 import com.scalian.ArquitecturaSpringBoot.model.dto.PersonaDTO;
 import com.scalian.ArquitecturaSpringBoot.model.entity.Libro;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 public class LibroService {
 
     private final LibroRepository libroRepository;
+    private final LibroEventProducer libroEventProducer;
 
     public List<LibroDTO> obtenerTodos() {
         return libroRepository.findAll().stream()
@@ -40,7 +42,14 @@ public class LibroService {
         }
 
         Libro libro = new Libro(null, libroDTO.getTitulo(), libroDTO.getAutor(), libroDTO.getPaginas());
-        return libroRepository.save(libro);
+
+        Libro guardado = libroRepository.save(libro);
+
+        // Kafka: Publicar evento CREATED
+        libroEventProducer.sendLibroCreated(guardado);
+
+        return guardado;
+        //return libroRepository.save(libro);
     }
 
     //JPQL
