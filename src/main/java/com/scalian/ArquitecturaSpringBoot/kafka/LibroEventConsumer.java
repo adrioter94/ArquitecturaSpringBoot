@@ -34,8 +34,8 @@ public class LibroEventConsumer {
 
     private void procesarEvento(LibroEvent event) {
         // Simular fallo a propósito
-        if (event.getLibroId() == 8) {
-            throw new RuntimeException("Fallo simulado procesando libro 8");
+        if (event.getLibroId() == 100) {
+            throw new RuntimeException("Fallo simulado procesando libro 100");
         }
 
         // Procesamiento normal

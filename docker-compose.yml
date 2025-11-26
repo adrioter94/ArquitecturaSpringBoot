@@ -77,6 +77,17 @@ services:
       - kafka
       - schema-registry
 
+  oracle-xe:
+    image: gvenzl/oracle-xe:latest
+    container_name: curso-testing-oracle
+    restart: always
+    environment:
+      ORACLE_PASSWORD: mypassword
+      ORACLE_CHARACTERSET: AL32UTF8
+    ports:
+      - "1521:1521"
+      - "5500:5500"  # Enterprise Manager opcional
+
 volumes:
   pgdata:
   kafka_data:
